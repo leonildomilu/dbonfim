@@ -138,6 +138,7 @@
     display:block;height:100%;width:0%;
     border-radius:999px;
     background:linear-gradient(90deg,#ffd23f,#fff);
+    transition:width .9s ease;
     animation:fill 2.6s cubic-bezier(.22,.9,.35,1) .3s forwards;
   }
   @keyframes fill{to{width:68%}}
@@ -198,6 +199,18 @@
     <span><strong>D Bonfim Transportes</strong></span>
     <span class="copy">© 2026 <a href="https://leonildomilu.github.io/technetworkpi/" target="_blank" rel="noopener">Tech Network</a>. Todos os direitos reservados.</span>
   </footer>
+
+  <script>
+    // Barra de progresso: entra em 68%, sobe para 69% apos 10s e permanece
+    (function () {
+      var pct = document.querySelector('.pct');
+      var fill = document.querySelector('.bar i');
+      setTimeout(function () {
+        pct.textContent = '69%';
+        fill.style.width = '69%';
+      }, 10000);
+    })();
+  </script>
 
 </body>
 </html>
