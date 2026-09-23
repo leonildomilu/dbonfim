@@ -138,9 +138,7 @@
     border-radius:999px;
     background:linear-gradient(90deg,#ffd23f,#fff);
     transition:width .9s ease;
-    animation:fill 2.6s cubic-bezier(.22,.9,.35,1) .3s forwards;
   }
-  @keyframes fill{to{width:68%}}
 
   /* rodape */
   footer{
@@ -200,14 +198,35 @@
   </footer>
 
   <script>
-    // Barra de progresso: entra em 68%, sobe para 69% apos 10s e permanece
+    // Barra: entra em 68%, depois sobe 1% a cada 10s ate 78% e permanece
     (function () {
       var pct = document.querySelector('.pct');
       var fill = document.querySelector('.bar i');
-      setTimeout(function () {
-        pct.textContent = '69%';
-        fill.style.width = '69%';
-      }, 10000);
+      var target = 78;
+
+      function setPct(v){
+        fill.style.width = v + '%';
+        pct.textContent = v + '%';
+      }
+
+      // animacao inicial 0 -> 68
+      var start = 68;
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){ setPct(start); });
+      });
+
+      // 69, 70, ... 78 — 1% a cada 10s
+      setTimeout(function(){
+        var cur = start;
+        var t = setInterval(function(){
+          if (cur < target){
+            cur++;
+            setPct(cur);
+          } else {
+            clearInterval(t);
+          }
+        }, 10000);
+      }, 3000);
     })();
   </script>
 
