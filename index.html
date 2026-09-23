@@ -1,53 +1,203 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D Bonfim Transportes</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D Bonfim Transportes · Em manutenção</title>
+<meta name="description" content="Nossa plataforma está em manutenção programada. Em breve estaremos de volta.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#d80018">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,500;0,600;0,700;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#d80018;
+    --red-deep:#a3000f;
+    --red-dark:#7a000c;
+    --ink:#171717;
+    --paper:#ffffff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    font-family:'Archivo',system-ui,sans-serif;
+    background:
+      radial-gradient(120% 90% at 50% -10%, var(--red) 0%, var(--red-deep) 58%, var(--red-dark) 100%);
+    color:var(--paper);
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    overflow-x:hidden;
+  }
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+  /* faixa de movimento (swoosh abstrato) — sutil, diagonal */
+  .streaks{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+  .streaks span{
+    position:absolute;
+    left:-30%;
+    width:160%;
+    height:2px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.20),transparent);
+    transform:rotate(-8deg);
+    animation:slide 9s linear infinite;
+  }
+  .streaks span:nth-child(1){top:18%;animation-delay:0s;opacity:.5}
+  .streaks span:nth-child(2){top:46%;animation-delay:3s;height:1px;opacity:.35}
+  .streaks span:nth-child(3){top:74%;animation-delay:6s;opacity:.45}
+  @keyframes slide{
+    0%{transform:translateX(-18%) rotate(-8deg)}
+    100%{transform:translateX(18%) rotate(-8deg)}
+  }
 
-            background-color: #e00000;
-            color: #ffffff;
-            text-align: center;
-        }
+  /* barra superior de status */
+  .topbar{
+    position:relative;z-index:2;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px clamp(20px,5vw,56px);
+    font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+    color:rgba(255,255,255,.85);
+  }
+  .status-pill{
+    display:inline-flex;align-items:center;gap:9px;
+    background:rgba(0,0,0,.22);
+    border:1px solid rgba(255,255,255,.22);
+    padding:8px 16px;border-radius:999px;
+    backdrop-filter:blur(4px);
+  }
+  .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:#ffd23f;
+    box-shadow:0 0 0 0 rgba(255,210,63,.6);
+    animation:pulse 2s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(255,210,63,.55)}
+    70%{box-shadow:0 0 0 9px rgba(255,210,63,0)}
+    100%{box-shadow:0 0 0 0 rgba(255,210,63,0)}
+  }
+  .topbar .ref{opacity:.75;font-variant-numeric:tabular-nums}
 
-        img {
-            max-width: 320px;
-            width: 80%;
-            height: auto;
-            margin-bottom: 30px;
-        }
+  /* conteúdo central */
+  main{
+    position:relative;z-index:1;
+    flex:1;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    text-align:center;
+    padding:12px clamp(20px,6vw,40px) 40px;
+  }
+  .logo{
+    width:min(560px,86vw);
+    height:auto;
+    display:block;
+    margin:0 auto clamp(30px,6vh,52px);
+    filter:drop-shadow(0 10px 30px rgba(0,0,0,.35));
+  }
+  h1{
+    font-style:italic;font-weight:900;
+    font-size:clamp(2rem,6vw,3.6rem);
+    letter-spacing:.01em;line-height:1.05;
+    text-transform:uppercase;
+  }
+  .sub{
+    margin-top:16px;
+    font-size:clamp(1rem,2.2vw,1.15rem);
+    font-weight:500;
+    color:rgba(255,255,255,.88);
+    max-width:44ch;
+    line-height:1.6;
+  }
 
-        h1 {
-            font-size: 2rem;
-            margin: 0;
-        }
+  /* painel de progresso */
+  .panel{
+    margin-top:clamp(28px,5vh,44px);
+    width:min(420px,100%);
+    background:rgba(0,0,0,.20);
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:14px;
+    padding:20px 24px;
+    backdrop-filter:blur(6px);
+  }
+  .panel .row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:13px;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(255,255,255,.8);
+  }
+  .panel .pct{font-weight:700;font-size:15px;color:#fff;font-variant-numeric:tabular-nums}
+  .bar{
+    margin-top:12px;
+    height:8px;border-radius:999px;
+    background:rgba(255,255,255,.14);
+    overflow:hidden;
+  }
+  .bar i{
+    display:block;height:100%;width:0%;
+    border-radius:999px;
+    background:linear-gradient(90deg,#ffd23f,#fff);
+    animation:fill 2.6s cubic-bezier(.22,.9,.35,1) .3s forwards;
+  }
+  @keyframes fill{to{width:68%}}
+  .panel .note{margin-top:12px;font-size:12.5px;color:rgba(255,255,255,.62)}
 
-        p {
-            font-size: 1.2rem;
-            margin-top: 10px;
-            opacity: 0.8;
-        }
-    </style>
+  /* rodape */
+  footer{
+    position:relative;z-index:1;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:18px clamp(20px,5vw,56px) 22px;
+    font-size:12.5px;
+    color:rgba(255,255,255,.62);
+    letter-spacing:.03em;
+  }
+  footer .copy{margin-left:auto}
+  footer a{
+    color:rgba(255,255,255,.92);
+    font-weight:700;
+    text-decoration:none;
+    border-bottom:1px solid rgba(255,255,255,.35);
+    padding-bottom:1px;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  footer a:hover{color:#fff;border-bottom-color:rgba(255,255,255,.85)}
+
+  @media (prefers-reduced-motion: reduce){
+    .streaks span,.dot,.bar i{animation:none}
+    .bar i{width:68%}
+  }
+</style>
 </head>
 <body>
 
-    <!-- Caminho relativo correto -->
-    <img src="DBonfim.jpg" alt="Logo D Bonfim Transportes">
+  <div class="streaks" aria-hidden="true"><span></span><span></span><span></span></div>
 
-    <h1>🚧 Site em Construção 🚧</h1>
-    <p>Estamos preparando novidades para você.</p>
+  <div class="topbar">
+    <span class="status-pill"><span class="dot" aria-hidden="true"></span> Manutenção programada</span>
+    <span class="ref">dbonfimtransportes.com</span>
+  </div>
+
+  <main>
+    <img class="logo" src="logo-clean-lg.jpg" alt="D Bonfim Transportes" width="1400" height="390">
+
+    <h1>Estamos em manutenção</h1>
+    <p class="sub">
+      Nosso site está passando por melhorias para te atender melhor.
+      Em breve retornamos ao ar. Agradecemos a sua paciência.
+    </p>
+
+    <div class="panel" role="status" aria-live="polite">
+      <div class="row"><span>Atualizando sistemas</span><span class="pct">68%</span></div>
+      <div class="bar"><i aria-hidden="true"></i></div>
+      <p class="note">Nossa equipe está trabalhando para restabelecer o serviço o mais rápido possível.</p>
+    </div>
+  </main>
+
+  <footer>
+    <span><strong>D Bonfim Transportes</strong></span>
+    <span class="copy">© 2026 <a href="https://leonildomilu.github.io/technetworkpi/" target="_blank" rel="noopener">Tech Network</a>. Todos os direitos reservados.</span>
+  </footer>
 
 </body>
 </html>
